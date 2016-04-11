@@ -34,23 +34,27 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room fuera, antesala, biblioteca, salaDeRezos, capillaLibro, salaDeTorturas, salaInvocaciones;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        fuera = new Room("Te encuentras frente a la entrada del templo tu mision a sido dada invoca a cthulhu./n Haces un reconocimiento del templo es grande imponente pero tu sabes la verdad es un templo a los falsos dioses que vinieron y usurparon a los verdaderos dioses Yosh´gothot desearia destruirlo /n Pero no es momento de lamentar cosas que van a cambiar ademas el tiempo corre en tu contra");
+        antesala = new Room("Ves una imponente sala, llena de estatuas de los Antigüos aquellos que desterraron a los verdaderos dioses. /n Solo verlo te arde la sangre, un monton de antorchas iluminan la habitacion, aun asi, apenas se ve, las sombras te protegen aunque no parece haber nadie");
+        biblioteca = new Room("La habitacion en la que has entrado parece una biblioteca. Se respira olor a magia antigua y libros viejos aqui no esta lo que buscas. /n Ves un bibliotecario de espaldas a ti si te descubren el juego termina");
+        salaDeRezos = new Room("Ante ti aparece una gran sala, llena de altares hay dos puertas semi escondidas. ");
+        capillaLibro = new Room("Al fin lo encontraste ahi  esta delante tuyo. /n Bien cojes el libro ahora hayque conseguir entrar en la sala de invocaciones");
+        salaDeTorturas = new Room("Es una sala oscura y tetrica avanzas un poco pero no ves nada, notas una presencia de tras de ti te giras y ves una sombra te golpea quedas inconsciente /n GAME OVER");
+        salaInvocaciones = new Room("Esta es la sala en la que Cthulhu sera invocadoesta es la sala en la que nuestro gran Primigenio, se despertara de su profundo sueño /n una luz te deslumbra /n que pasa aqui esto no es normal /n voces en coro te rodean y cantan al unisono /n la sangre de un seguidor inpio es necesaria para la invocacion de nuestro señor, muerte al infiel larga vida a los antiguos /n GAME OVER");
         
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
-
-        currentRoom = outside;  // start game outside
+        fuera.setExits(salaDeRezos, biblioteca, null, antesala);
+        antesala.setExits(null, fuera, null, salaInvocaciones);
+        biblioteca.setExits(null, null, null, fuera);
+        salaDeRezos.setExits(capillaLibro, salaDeTorturas, fuera, null);
+        capillaLibro.setExits(null, null, salaDeRezos, null);
+        salaDeTorturas.setExits(null, null, null, null);
+        salaInvocaciones.setExits(null, null, null, null);
+        //arriba, derecha, abjo, izquierda
+        currentRoom = fuera;  // start game outside
     }
 
     /**
@@ -77,11 +81,11 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Bien venido a Cthulhu adventure");
+        System.out.println("Es otro juego mas de rol, pero de nuestro dios Cthulhu");
+        System.out.println("Teclea 'help' si necesitas ayuda.");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
+        System.out.println( currentRoom.getDescription());
         System.out.print("Exits: ");
         if(currentRoom.northExit != null) {
             System.out.print("north ");
@@ -108,7 +112,7 @@ public class Game
         boolean wantToQuit = false;
 
         if(command.isUnknown()) {
-            System.out.println("I don't know what you mean...");
+            System.out.println("no se a que te refieres");
             return false;
         }
 
@@ -136,7 +140,7 @@ public class Game
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around at the temple.");
         System.out.println();
         System.out.println("Your command words are:");
         System.out.println("   go quit help");
@@ -176,7 +180,7 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
-            System.out.println("You are " + currentRoom.getDescription());
+            System.out.println( currentRoom.getDescription());
             System.out.print("Exits: ");
             if(currentRoom.northExit != null) {
                 System.out.print("north ");
