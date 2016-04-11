@@ -46,13 +46,13 @@ public class Game
         salaInvocaciones = new Room("Esta es la sala en la que Cthulhu sera invocadoesta es la sala en la que nuestro gran Primigenio, se despertara de su profundo sueño  \nuna luz te deslumbra \nvoces en coro te rodean y cantan al unisono \nla sangre de un seguidor inpio es necesaria para la invocacion de nuestro señor, muerte al infiel larga vida a los antiguos \n--------------------------GAME OVER-----------------------");
         
         // initialise room exits
-        fuera.setExits(salaDeRezos, biblioteca, null, antesala, null);
-        antesala.setExits(null, fuera, null, salaInvocaciones, null);
-        biblioteca.setExits(null, null, null, fuera, null);
-        salaDeRezos.setExits(capillaLibro, salaDeTorturas, fuera, null, null);
-        capillaLibro.setExits(null, null, salaDeRezos, null, salaDeTorturas);
-        salaDeTorturas.setExits(null, null, null, null, null);
-        salaInvocaciones.setExits(null, null, null, null, null);
+        fuera.setExits(salaDeRezos, biblioteca, null, antesala, null, null);
+        antesala.setExits(null, fuera, null, salaInvocaciones, null, null);
+        biblioteca.setExits(null, null, null, fuera, null,null);
+        salaDeRezos.setExits(capillaLibro, salaDeTorturas, fuera, null, null,null);
+        capillaLibro.setExits(null, null, salaDeRezos, null, salaDeTorturas, null);
+        salaDeTorturas.setExits(null, null, null, null, null, null);
+        salaInvocaciones.setExits(null, null, null, null, null, null);
         //arriba, derecha, abjo, izquierda
         currentRoom = fuera;  // start game outside
     }
@@ -147,28 +147,12 @@ public class Game
         String direction = command.getSecondWord();
 
         // Try to leave current room.
-        Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = currentRoom.northExit;
-        }
-        if(direction.equals("east")) {
-            nextRoom = currentRoom.eastExit;
-        }
-        if(direction.equals("south")) {
-            nextRoom = currentRoom.southExit;
-        }
-        if(direction.equals("west")) {
-            nextRoom = currentRoom.westExit;
-        }
-        if(direction.equals("southeast")) {
-            nextRoom = currentRoom.southeastExit;
-        }
-
-        if (nextRoom == null) {
+        Room room = currentRoom.getExit(direction);
+        if (room == null) {
             System.out.println("There is no door!");
         }
         else {
-            currentRoom = nextRoom;
+            currentRoom = room;
             printLocationInfo();
         }
     }
@@ -191,23 +175,10 @@ public class Game
     
     private void printLocationInfo(){
         System.out.println( currentRoom.getDescription());
-            System.out.print("Exits: ");
-            if(currentRoom.northExit != null) {
-                System.out.print("north ");
-            }
-            if(currentRoom.eastExit != null) {
-                System.out.print("east ");
-            }
-            if(currentRoom.southExit != null) {
-                System.out.print("south ");
-            }
-            if(currentRoom.westExit != null) {
-                System.out.print("west ");
-            }
-            if(currentRoom.southeastExit != null) {
-                System.out.print("southeast ");
-            }
-            System.out.println();
+        System.out.println(currentRoom.getExitString());
+        System.out.print("Exits: ");
         
     }
+    
+    
 }
