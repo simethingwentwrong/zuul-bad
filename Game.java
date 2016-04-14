@@ -51,7 +51,7 @@ public class Game
         biblioteca.setExits(null, null, null, fuera, null,null);
         salaDeRezos.setExits(capillaLibro, salaDeTorturas, fuera, null, null,null);
         capillaLibro.setExits(null, null, salaDeRezos, null, salaDeTorturas, null);
-        salaDeTorturas.setExits(null, null, null, null, null, null);
+        salaDeTorturas.setExits(null, null, null, null, null, capillaLibro);
         salaInvocaciones.setExits(null, null, null, null, null, null);
         //arriba, derecha, abjo, izquierda
         currentRoom = fuera;  // start game outside
@@ -175,8 +175,9 @@ public class Game
     
     private void printLocationInfo(){
         System.out.println( currentRoom.getDescription());
-        System.out.println(currentRoom.getExitString());
         System.out.print("Exits: ");
+        System.out.println(currentRoom.getExitString());
+        
         
     }
     

@@ -1,3 +1,5 @@
+
+import java.util.HashMap;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -14,13 +16,8 @@
  */
 public class Room 
 {
-    public String description;
-    public Room northExit;
-    public Room southExit;
-    public Room eastExit;
-    public Room westExit;
-    public Room southeastExit;
-    public Room northweastExit;
+    private String description;
+    private HashMap<String,Room> exits;
     
     /**
      * Create a room described "description". Initially, it has
@@ -30,6 +27,7 @@ public class Room
      */
     public Room(String description) 
     {
+        exits = new HashMap<String,Room>();
         this.description = description;
     }
 
@@ -41,20 +39,26 @@ public class Room
      * @param south The south exit.
      * @param west The west exit.
      */
-    public void setExits(Room north, Room east, Room south, Room west, Room southeast, Room northweast) 
+    public void setExits(Room north, Room east, Room south, Room west, Room southeast, Room northwest) 
     {
-        if(north != null)
-            northExit = north;
-        if(east != null)
-            eastExit = east;
-        if(south != null)
-            southExit = south;
-        if(west != null)
-            westExit = west;
-        if(southeast != null)
-            southeastExit = southeast;
-        if(northweast != null)
-            northweastExit = northweast;
+      if(north != null){
+         exits.put("northExit",north);
+       }
+      if(east != null){
+          exits.put("eastExit",east);
+      }
+      if(south != null){
+          exits.put("southExit",south);
+        }
+      if(west != null){
+            exits.put("westExit",west);
+       }
+      if(southeast != null){
+            exits.put("southeastExit",southeast);
+       }
+      if(northwest != null){
+            exits.put("northwestExit",northwest);
+       }
     }
 
     /**
@@ -68,22 +72,22 @@ public class Room
     public Room getExit ( String direction){
         Room nextRoom = null;
         if(direction.equals("north")) {
-            nextRoom = northExit;
+            nextRoom = exits.get("northExit");
         }
         if(direction.equals("east")) {
-            nextRoom = eastExit;
+            nextRoom = exits.get("eastExit");
         }
         if(direction.equals("south")) {
-            nextRoom = southExit;
+            nextRoom = exits.get("southExit");
         }
         if(direction.equals("west")) {
-            nextRoom = westExit;
+            nextRoom = exits.get("westExit");
         }
         if(direction.equals("southeast")) {
-            nextRoom = southeastExit;
+            nextRoom = exits.get("southeastExit");
         }
           if(direction.equals("northweast")) {
-            nextRoom = northweastExit;
+            nextRoom = exits.get("northweastExit");
         }
         
         return nextRoom;
@@ -98,25 +102,27 @@ public class Room
     */
      public String getExitString(){
          
-            String exits = ("Exits: ");
-            if(northExit != null) {
-                System.out.print("north ");
-            }
-            if(eastExit != null) {
-                System.out.print("east ");
-            }
-            if(southExit != null) {
-                System.out.print("south ");
-            }
-            if(westExit != null) {
-                System.out.print("west ");
-            }
-            if(southeastExit != null) {
-                System.out.print("southeast ");
-            }
-            if(northweastExit != null) {
-                System.out.print("northweast ");
-            }
+     
+     String exits = "exits: ";
+
+     if(this.exits.get("northExit") != null) {
+             exits = exits + "north ";
+         }
+     if(this.exits.get("eastExit") != null) {
+             exits = exits + "east ";
+         }
+     if(this.exits.get("southExit") != null) {
+             exits = exits + "south ";
+         }
+     if(this.exits.get("westExit") != null) {
+             exits = exits + "west ";
+         }
+     if(this.exits.get("southeastExit") != null) {
+             exits = exits + "southeast ";
+         }
+     if(this.exits.get("northwestExit") != null) {
+             exits = exits + "northwest ";
+         }
             return exits;
             
         }
