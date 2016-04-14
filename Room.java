@@ -1,5 +1,6 @@
 
-import java.util.HashMap;
+
+import java.util.*;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -70,28 +71,7 @@ public class Room
     }
     
     public Room getExit ( String direction){
-        Room nextRoom = null;
-        if(direction.equals("north")) {
-            nextRoom = exits.get("northExit");
-        }
-        if(direction.equals("east")) {
-            nextRoom = exits.get("eastExit");
-        }
-        if(direction.equals("south")) {
-            nextRoom = exits.get("southExit");
-        }
-        if(direction.equals("west")) {
-            nextRoom = exits.get("westExit");
-        }
-        if(direction.equals("southeast")) {
-            nextRoom = exits.get("southeastExit");
-        }
-          if(direction.equals("northweast")) {
-            nextRoom = exits.get("northweastExit");
-        }
-        
-        return nextRoom;
-        
+        return exits.get(direction);
     }
     
     /**
@@ -101,29 +81,11 @@ public class Room
     * @ return A description of the available exits.
     */
      public String getExitString(){
-         
-     
      String exits = "exits: ";
-
-     if(this.exits.get("northExit") != null) {
-             exits = exits + "north ";
-         }
-     if(this.exits.get("eastExit") != null) {
-             exits = exits + "east ";
-         }
-     if(this.exits.get("southExit") != null) {
-             exits = exits + "south ";
-         }
-     if(this.exits.get("westExit") != null) {
-             exits = exits + "west ";
-         }
-     if(this.exits.get("southeastExit") != null) {
-             exits = exits + "southeast ";
-         }
-     if(this.exits.get("northwestExit") != null) {
-             exits = exits + "northwest ";
-         }
-            return exits;
-            
+     Iterator it = this.exits.keySet().iterator();
+      while(it.hasNext()){
+           exits = exits + (it.next()) + " ";
         }
+        return exits;
+    }
 }
