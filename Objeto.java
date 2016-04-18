@@ -12,8 +12,8 @@ public class Objeto
    
    public Objeto (String objeto, float pesoObjeto)
    {
-       this.objeto = "ninguno";
-       this.pesoObjeto = 0;
+       this.objeto= objeto;
+       this.pesoObjeto = pesoObjeto;
    }
    
    public String getObjeto()
