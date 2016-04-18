@@ -115,6 +115,9 @@ public class Game
         else if (commandWord.equals("look")){
             System.out.print(currentRoom.getLongDescription());
         }
+        else if (commandWord.equals("eat")){
+            System.out.print("You have eaten now and you are not hungry any more");
+        }
 
         return wantToQuit;
     }
@@ -132,7 +135,7 @@ public class Game
         System.out.println("around at the temple.");
         System.out.println();
         System.out.println("Your command words are:");
-        System.out.println("   go quit help look");
+        System.out.println("   go quit help look eat");
     }
 
     /** 
