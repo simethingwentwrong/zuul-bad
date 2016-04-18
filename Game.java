@@ -53,7 +53,7 @@ public class Game
         capillaLibro.setExits(null, null, salaDeRezos, null, salaDeTorturas, null);
         salaDeTorturas.setExits(null, null, null, null, null, capillaLibro);
         salaInvocaciones.setExits(null, null, null, null, null, null);
-        capillaLibro.setObjeto("Necronomicon", 0.800F);
+        capillaLibro.addObjeto("Necronomicon", 0.800F);
         //arriba, derecha, abjo, izquierda
         currentRoom = fuera;  // start game outside
     }

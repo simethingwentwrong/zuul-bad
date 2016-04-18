@@ -19,8 +19,7 @@ public class Room
 {
     private String description;
     private HashMap<String,Room> exits;
-    private String objeto;
-    private float pesoObjeto;
+    private ArrayList<Objeto> objetos;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -31,17 +30,15 @@ public class Room
     {
         exits = new HashMap<String,Room>();
         this.description = description;
-        objeto = "ninguno";
-        pesoObjeto = 0;
+        objetos = new ArrayList<>();
     }
     
     /**
     * Fija el objeto de la sala
     */
-    public void setObjeto(String objeto, float peso)
+    public void addObjeto(String objeto, float peso)
     {
-       this.objeto = objeto;
-       this.pesoObjeto = peso;
+        objetos.add(new Objeto(objeto,peso));
    }
 
     /**
@@ -109,7 +106,12 @@ public class Room
       */
      public String getLongDescription()
      {
-         return "Tu estas " + description + "\n Objeto de la sala: " + objeto + " Peso: " + pesoObjeto + "Kg " + "\n" + getExitString();
-     }
+          String ListadoObjetos = "";
+         for(Objeto objeto:objetos)
+         {
+             ListadoObjetos = ListadoObjetos + objeto.toString();
+         }
+         return "Tu estas " + description + "\nObjetos de la sala: " + ListadoObjetos + "\n" + getExitString();
+    }
   }
 
