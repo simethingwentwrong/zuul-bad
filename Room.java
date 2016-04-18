@@ -19,7 +19,8 @@ public class Room
 {
     private String description;
     private HashMap<String,Room> exits;
-    
+    private String objeto;
+    private float pesoObjeto;
     /**
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
@@ -30,7 +31,18 @@ public class Room
     {
         exits = new HashMap<String,Room>();
         this.description = description;
+        objeto = "ninguno";
+        pesoObjeto = 0;
     }
+    
+    /**
+    * Fija el objeto de la sala
+    */
+    public void setObjeto(String objeto, float peso)
+    {
+       this.objeto = objeto;
+       this.pesoObjeto = peso;
+   }
 
     /**
      * Define the exits of this room.  Every direction either leads
@@ -97,7 +109,7 @@ public class Room
       */
      public String getLongDescription()
      {
-         return "Tu estas " + description + "\n" + getExitString();
+         return "Tu estas " + description + "\n Objeto de la sala: " + objeto + " Peso: " + pesoObjeto + "Kg " + "\n" + getExitString();
      }
   }
 
