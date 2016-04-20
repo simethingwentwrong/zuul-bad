@@ -21,7 +21,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room lastRoom;
+    private Stack<Room> last;
     /**
      * Create the game and initialise its internal map.
      */
@@ -29,7 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        lastRoom = null;
+        last = new Stack<>();
     }
 
     /**
@@ -123,14 +123,14 @@ public class Game
             System.out.print("You have eaten now and you are not hungry any more");
         }
         else if (commandWord.equals("back")){
-             if (lastRoom != null)
+             if (!last.empty())
              {
-                 currentRoom = lastRoom;
-                 lastRoom = null;
+                 currentRoom = last.pop();
+                  printLocationInfo();
              }
              else
              {
-                System.out.println("No es posible volver a la localizacion anterior");
+                System.out.println("No hay  inguna sala antes que esta");
              }
         }
 
@@ -173,6 +173,7 @@ public class Game
             System.out.println("There is no door!");
         }
         else {
+            last.push(currentRoom);
             currentRoom = room;
             printLocationInfo();
         }
