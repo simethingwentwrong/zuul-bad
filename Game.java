@@ -133,7 +133,9 @@ public class Game
                 System.out.println("No hay  inguna sala antes que esta");
              }
         }
-
+        else if (commandWord.equals("take")){
+            
+        }
         return wantToQuit;
     }
 
@@ -150,7 +152,7 @@ public class Game
         System.out.println("around at the temple.");
         System.out.println();
         System.out.println("Your command words are:");
-        System.out.println("   go quit help look eat back");
+        parser.getCommands().showAll();
     }
 
     /** 
