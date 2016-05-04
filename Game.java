@@ -56,7 +56,10 @@ public class Game
         capillaLibro.setExits(null, null, salaDeRezos, null, salaDeTorturas, null);
         salaDeTorturas.setExits(null, null, null, null, null, capillaLibro);
         salaInvocaciones.setExits(null, null, null, null, null, null);
-        capillaLibro.addObjeto("Necronomicon", 0.800F);
+        capillaLibro.addObjeto("Necronomicon", 0.8F, true);
+        antesala.addObjeto("espada sagrada", 4F, false);
+        salaDeRezos.addObjeto("puñal", 0.8F, true);
+        biblioteca.addObjeto("Libro Magico", 4F, true);
         //arriba, derecha, abjo, izquierda
         currentRoom = fuera;  // start game outside
     }
@@ -106,23 +109,23 @@ public class Game
             return false;
         }
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
+        Option commandWord = command.getCommandWord();
+        if (commandWord.ordinal() ==2) {
             printHelp();
         }
-        else if (commandWord.equals("go")) {
+        else if (commandWord.ordinal() ==0) {
             goRoom(command);
         }
-        else if (commandWord.equals("quit")) {
+        else if (commandWord.ordinal() ==1) {
             wantToQuit = quit(command);
         }
-        else if (commandWord.equals("look")){
+        else if (commandWord.ordinal() ==3){
             System.out.print(currentRoom.getLongDescription());
         }
-        else if (commandWord.equals("eat")){
+        else if (commandWord.ordinal() ==4){
             System.out.print("You have eaten now and you are not hungry any more");
         }
-        else if (commandWord.equals("back")){
+        else if (commandWord.ordinal() ==5){
              if (!last.empty())
              {
                  currentRoom = last.pop();
@@ -133,9 +136,14 @@ public class Game
                 System.out.println("No hay  inguna sala antes que esta");
              }
         }
-        else if (commandWord.equals("take")){
-            
-            
+        else if (commandWord.ordinal() ==8) {
+            System.out.println(jugador.itemEncima());
+        }
+        else if (commandWord.ordinal() ==6){
+            cojerItem(command);           
+        }
+        else if (commandWord.ordinal() ==7) {
+            dejarItem(command);
         }
         return wantToQuit;
     }
@@ -205,5 +213,48 @@ public class Game
         
     }
     
+     /**
+     * coje el item de la sala y se lo da al jugador si puede
+     */
+    private void cojerItem(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Cojer que?");
+            return;
+        }
+        String nomObj = command.getSecondWord();
+        if(jugador.getLocalizacionActual().existeItem(nomObj))
+        {
+            Objeto item = jugador.getLocalizacionActual().cojerItem(nomObj);
+            if (!jugador.cojerItem(item))
+            {
+                jugador.getLocalizacionActual().moveItem(item);
+            }
+        }
+        else
+        {
+            System.out.println("No esta ese item en esta sala");
+        }
+    }
+    
+    /**
+     * Coje el item del jugador y lo deja en la sala
+     */
+    private void dejarItem(Command command)
+    {
+        if(!command.hasSecondWord()) {
+            System.out.println("Dejar que?");
+            return;
+        }
+        String nomObj = command.getSecondWord();
+        if(jugador.existeItem(nomObj))
+        {
+            jugador.getLocalizacionActual().moveItem(jugador.dejarItem(nomObj));
+        }
+        else
+        {
+            System.out.println("El jugador no tiene ese item");
+        }
+    }
     
 }

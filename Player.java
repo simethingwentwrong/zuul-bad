@@ -10,7 +10,7 @@ public class Player
 {
     // instance variables - replace the example below with your own
     private Room localizacionActual;
-    private static final float pesoM = 20;
+    private static final float pesoM = 3;
     private ArrayList<Objeto> items;
     private float pesoAc;
     private Stack<Room> back;

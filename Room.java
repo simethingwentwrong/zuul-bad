@@ -36,9 +36,9 @@ public class Room
     /**
     * Fija el objeto de la sala
     */
-    public void addObjeto(String objeto, float peso)
+    public void addObjeto(String objeto, float peso, boolean puede)
     {
-        objetos.add(new Objeto(objeto,peso));
+        objetos.add(new Objeto(objeto,peso,puede));
    }
 
     /**
