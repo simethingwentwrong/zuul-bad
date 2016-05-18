@@ -1,4 +1,4 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -12,23 +12,14 @@ import java.util.HashMap;
 
 public class CommandWords
 {
-    private HashMap<String,Option> comandos;
+    private Option[] comandos;
     
     /**
      * Constructor - initialise the command words.
      */
     public CommandWords()
     {
-         comandos = new HashMap<>();
-         comandos.put("andare",Option.GO);
-         comandos.put("cessare",Option.QUIT);
-         comandos.put("assistenza",Option.HELP);
-         comandos.put("guardare",Option.LOOK);
-         comandos.put("consumare",Option.EAT);
-         comandos.put("indietro",Option.BACK);
-         comandos.put("prendere",Option.TAKE);
-         comandos.put("cadere",Option.DROP);
-         comandos.put("elementi",Option.ITEMS);
+         comandos = Option.values();
     }
 
     /**
@@ -38,14 +29,27 @@ public class CommandWords
      */
     public boolean isCommand(String aString)
     {        
-        return comandos.containsKey(aString);
+         boolean esCom = false;
+         for(int i = 0;i<comandos.length;i++)
+         {
+             if (comandos[i].getNombreC().equals(aString))
+             {
+                 esCom = true;
+             }
+        }
+         return esCom;
     }
 
     /**
      * Print all valid commands to System.out
      */
     public void showAll(){        
-        System.out.println(comandos.keySet());
+          String comands = "";
+         for(int i = 0;i<comandos.length;i++)
+         {
+             comands = comands + comandos[i].getNombreC()+" ";
+         }
+         System.out.println(comands);
     }
     
      /**
@@ -59,7 +63,13 @@ public class CommandWords
          Option devolver = Option.UNKNOWN;
          if (isCommand(commandWord))
          {
-             devolver = comandos.get(commandWord);
+              for(int i = 0;i<comandos.length;i++)
+             {
+                if (comandos[i].getNombreC().equals(commandWord))
+                 {
+                     devolver = comandos[i];
+                 }
+             }
          }
          return devolver;
      }

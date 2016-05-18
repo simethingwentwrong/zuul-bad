@@ -7,5 +7,20 @@
   */
  public enum Option
  {
-   GO, QUIT, HELP, LOOK, EAT, BACK, TAKE, DROP, ITEMS, UNKNOWN
+   GO("go"), QUIT("quit"), HELP("help"), LOOK("look"), EAT("eat"), BACK("back"), TAKE("take"), DROP("drop"), ITEMS("items"), UNKNOWN("UNKNOWN");
+     
+     private String nombreC;
+     
+     /**
+      * Constructor - initialise the command words.
+      */
+     private Option(String nombreC)
+     {
+         this.nombreC = nombreC;
+     }
+     
+    public String getNombreC()
+     {
+         return nombreC;
+    }
  }
