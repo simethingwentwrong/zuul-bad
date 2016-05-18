@@ -22,6 +22,7 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> last;
+    private Player player;
     /**
      * Create the game and initialise its internal map.
      */
@@ -30,6 +31,7 @@ public class Game
         createRooms();
         parser = new Parser();
         last = new Stack<>();
+        
     }
 
     /**
@@ -56,12 +58,13 @@ public class Game
         capillaLibro.setExits(null, null, salaDeRezos, null, salaDeTorturas, null);
         salaDeTorturas.setExits(null, null, null, null, null, capillaLibro);
         salaInvocaciones.setExits(null, null, null, null, null, null);
-        capillaLibro.addObjeto("Necronomicon", 0.8F, true);
+        capillaLibro.addObjeto("Necronomicon", 0.8F, false);
         antesala.addObjeto("espada sagrada", 4F, false);
-        salaDeRezos.addObjeto("puñal", 0.8F, true);
-        biblioteca.addObjeto("Libro Magico", 4F, true);
+        salaDeRezos.addObjeto("puñal", 0.8F, false);
+        biblioteca.addObjeto("Libro Magico", 4F, false);
         //arriba, derecha, abjo, izquierda
         currentRoom = fuera;  // start game outside
+        player = new Player(currentRoom);
     }
 
     /**
@@ -137,7 +140,7 @@ public class Game
              }
         }
         else if (commandWord.ordinal() ==8) {
-            System.out.println(jugador.itemEncima());
+            System.out.println(player.itemEncima());
         }
         else if (commandWord.ordinal() ==6){
             cojerItem(command);           
@@ -185,8 +188,7 @@ public class Game
         }
         else {
             last.push(currentRoom);
-            currentRoom = room;
-            printLocationInfo();
+            player.setLocalizacion(room);
         }
     }
 
@@ -223,12 +225,12 @@ public class Game
             return;
         }
         String nomObj = command.getSecondWord();
-        if(jugador.getLocalizacionActual().existeItem(nomObj))
+        if(player.getLocalizacionActual().existeItem(nomObj))
         {
-            Objeto item = jugador.getLocalizacionActual().cojerItem(nomObj);
-            if (!jugador.cojerItem(item))
+            Objeto item = player.getLocalizacionActual().cojerItem(nomObj);
+            if (!player.cojerItem(item))
             {
-                jugador.getLocalizacionActual().moveItem(item);
+                player.getLocalizacionActual().moveItem(item);
             }
         }
         else
@@ -247,9 +249,9 @@ public class Game
             return;
         }
         String nomObj = command.getSecondWord();
-        if(jugador.existeItem(nomObj))
+        if(player.existeItem(nomObj))
         {
-            jugador.getLocalizacionActual().moveItem(jugador.dejarItem(nomObj));
+            player.getLocalizacionActual().moveItem(player.dejarItem(nomObj));
         }
         else
         {
