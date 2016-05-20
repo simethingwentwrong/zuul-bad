@@ -48,7 +48,7 @@ public class Game
         salaDeRezos = new Room("Ante ti aparece una gran sala, llena de altares hay dos puertas semi escondidas. ");
         capillaLibro = new Room("Al fin lo encontraste ahi  esta delante tuyo el NECRONOMICON. \nBien que empieze el ritual este templo y todo ser que en el habite sera el sacrificio para despertar a nuestro dios \nïa ïa Fgthan CTHULHU");
         salaDeTorturas = new Room("Es una sala oscura y tetrica avanzas un poco pero no ves nada, \nnotas una presencia de tras de ti te giras y ves una sombra te golpea quedas inconsciente \n--------------------------GAME OVER-----------------------");
-        salaInvocaciones = new Room("Esta es la sala en la que Cthulhu sera invocadoesta es la sala en la que nuestro gran Primigenio, se despertara de su profundo sueño  \nuna luz te deslumbra \nvoces en coro te rodean y cantan al unisono \nla sangre de un seguidor inpio es necesaria para la invocacion de nuestro señor, muerte al infiel larga vida a los antiguos \n--------------------------GAME OVER-----------------------");
+        salaInvocaciones = new Room("Estas en la sala de invocaciones ");
         
         // initialise room exits
         fuera.setExits(salaDeRezos, biblioteca, null, antesala, null, null);
@@ -118,6 +118,11 @@ public class Game
         }
         else if (commandWord.ordinal() ==0) {
             goRoom(command);
+            if (currentRoom.getDescription().equals("Estas en la sala de invocaciones ")){
+                winCondition();
+            }
+            
+            
         }
         else if (commandWord.ordinal() ==1) {
             wantToQuit = quit(command);
@@ -259,4 +264,16 @@ public class Game
         }
     }
     
+    /**
+     * condicion de victoria
+     */
+    public void winCondition()
+    {
+        if(player.getLocalizacionActual().getDescription().equals("Estas en la sala de invocaciones")  && player.tieneLibro()){
+            System.out.println("Perfecto ya es nuestro ahora solo queda invocarlo, ïah ïah Fgthang Cthulhu despierta de este largo sueño y arrasa este mundo de impios. n/ HAS MUERTO INVOCANDO A TU DIOS");
+        }
+        else {
+            System.out.println("Todavia no puedes hacer la invocacion te estas adelantando");
+        }
+    }
 }

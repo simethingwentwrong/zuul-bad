@@ -129,6 +129,22 @@ public class Player
     {
         back.push(localizacionActual);
     }
+    
+    /**
+     * metodo para saber si tiene el libro
+     */
+    public boolean tieneLibro()
+    {
+        int i = 0;
+        boolean tiene = false;
+        while(!tiene){
+            if(items.get(i).getNomObj().equals("Necronomicon")){
+                tiene = true;
+            }
+            i++;
+        }
+        return tiene;
+    }
 }
 
 
