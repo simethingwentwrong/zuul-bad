@@ -1,5 +1,5 @@
 
-import java.util.Stack;
+import java.util.*;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -23,15 +23,17 @@ public class Game
     private Room currentRoom;
     private Stack<Room> last;
     private Player player;
+    private ArrayList<Npc> acolitos ;
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
-        createRooms();
+        
         parser = new Parser();
         last = new Stack<>();
-        
+        acolitos = new ArrayList<Npc>();
+        createRooms();
     }
 
     /**
@@ -47,7 +49,7 @@ public class Game
         biblioteca = new Room("La habitacion en la que has entrado parece una biblioteca. \nSe respira olor a magia antigua y libros viejos aqui no esta lo que buscas. \nVes un bibliotecario de espaldas a ti si te descubren el juego termina");
         salaDeRezos = new Room("Ante ti aparece una gran sala, llena de altares hay dos puertas semi escondidas. ");
         capillaLibro = new Room("Al fin lo encontraste ahi  esta delante tuyo el NECRONOMICON. \nBien que empieze el ritual este templo y todo ser que en el habite sera el sacrificio para despertar a nuestro dios \nïa ïa Fgthan CTHULHU");
-        salaDeTorturas = new Room("Es una sala oscura y tetrica avanzas un poco pero no ves nada, \nnotas una presencia de tras de ti te giras y ves una sombra te golpea quedas inconsciente \n--------------------------GAME OVER-----------------------");
+        salaDeTorturas = new Room("Es una sala oscura y tetrica avanzas un poco pero no ves nada, ves una luz y un hombre");
         salaInvocaciones = new Room("Estas en la sala de invocaciones ");
         
         // initialise room exits
@@ -62,6 +64,8 @@ public class Game
         antesala.addObjeto("espada sagrada", 4F, false);
         salaDeRezos.addObjeto("puñal", 0.8F, false);
         biblioteca.addObjeto("Libro Magico", 4F, false);
+        acolitos.add(new Npc(biblioteca));
+        acolitos.add(new Npc(salaDeTorturas));
         //arriba, derecha, abjo, izquierda
         currentRoom = fuera;  // start game outside
         player = new Player(currentRoom);
@@ -121,8 +125,12 @@ public class Game
             if (currentRoom.getDescription().equals("Estas en la sala de invocaciones ")){
                 winCondition();
             }
-            
-            
+            if (currentRoom.getDescription().equals("La habitacion en la que has entrado parece una biblioteca. \nSe respira olor a magia antigua y libros viejos aqui no esta lo que buscas. \nVes un bibliotecario de espaldas a ti si te descubren el juego termina")){
+                apuñalar();
+            }
+            if (currentRoom.getDescription().equals("Es una sala oscura y tetrica avanzas un poco pero no ves nada, ves una luz y un hombre ")){
+                preso();
+            }
         }
         else if (commandWord.ordinal() ==1) {
             wantToQuit = quit(command);
@@ -275,5 +283,33 @@ public class Game
         else {
             System.out.println("Todavia no puedes hacer la invocacion te estas adelantando");
         }
+    }
+    
+    /**
+     * condicion de victoria
+     */
+    public void apuñalar()
+    {
+        if(player.getLocalizacionActual().getDescription().equals("La habitacion en la que has entrado parece una biblioteca. \nSe respira olor a magia antigua y libros viejos aqui no esta lo que buscas. \nVes un bibliotecario de espaldas a ti si te descubren el juego termina")  && player.tienePuñal()){
+            System.out.println("Te hacercas siilosamente por la espalda y le clabas e puñal esta muero ya no dara problemas");
+            int cont = 0;
+            boolean matado = false;
+            while(cont < acolitos.size() && !matado)
+            {
+                if(acolitos.get(cont).getRoomAct().equals("La habitacion en la que has entrado parece una biblioteca. \nSe respira olor a magia antigua y libros viejos aqui no esta lo que buscas. \nVes un bibliotecario de espaldas a ti si te descubren el juego termina")){
+                  matado = true;
+                  acolitos.remove(cont);
+                }
+                cont++;
+            }
+        }
+        else{
+            System.out.println("te ha descubierto has muerto");
+        }
+    }
+    
+    public void preso()
+    {
+        System.out.println("Ahora estas atrapado con migo aqui, lo siento se termino tu juego puedes salir de el cuando te de la gana");
     }
 }

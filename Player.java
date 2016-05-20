@@ -145,6 +145,22 @@ public class Player
         }
         return tiene;
     }
+    
+    /**
+     * metodo para saber si tiene el puñal
+     */
+    public boolean tienePuñal()
+    {
+        int i = 0;
+        boolean tiene = false;
+        while(!tiene){
+            if(items.get(i).getNomObj().equals("Puñal")){
+                tiene = true;
+            }
+            i++;
+        }
+        return tiene;
+    }
 }
 
 
